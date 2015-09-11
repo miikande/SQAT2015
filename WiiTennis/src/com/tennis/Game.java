@@ -69,7 +69,7 @@ public class Game {
 	public List<Player> getTeam(int team) {
 		validateTeam(team);
 		
-		if (players.size() == 2)
+		if (players.size() == GAME_MODE_SINGLE)
 			return Arrays.asList(players.get(team));
 		
 		// If we reached this point it means this is a four player game!
@@ -89,6 +89,13 @@ public class Game {
 		points[team]++;		
 	}
 	
+	/**
+	 * Validates given team and throws an unchecked error if 
+	 * unknown team! Yes, this is brutal but this is a programmer
+	 * error and should be caught during the development!
+	 *  
+	 * @param team
+	 */
 	private void validateTeam(int team) {
 		if (team != TEAM_1 && team != TEAM_2) {
 			throw new IllegalArgumentException(
@@ -97,6 +104,11 @@ public class Game {
 		}
 	}
 
+	/**
+	 * Returns points for given team
+	 * @param team int TEAM_1 or TEAM_2
+	 * @return points as an integer value
+	 */
 	public int getPoints(int team) {
 		validateTeam(team);
 		
