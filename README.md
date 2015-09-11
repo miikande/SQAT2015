@@ -1,2 +1,4 @@
 # SQAT2015
-Exercise works for course "Software Quality And Testing" (University of Oulu)
+Exercises made during a course "Software Quality And Testing" (University of Oulu). Course mainly focuses on TDD and Unit testing. Used language is Java.
+
+Please feel free to grab a copy for learning purposes :)
