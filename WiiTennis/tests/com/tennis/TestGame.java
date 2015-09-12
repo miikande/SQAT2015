@@ -28,10 +28,6 @@ public class TestGame {
 	@Test
 	public void testAddPointsToTeams() {
 		initTwoPlayerGame(); 
-
-		// Should be zero in the beginning...
-		assertTrue(game.getPoints(Game.TEAM_1) == 0);
-		assertTrue(game.getPoints(Game.TEAM_2) == 0);
 		
 		// Add one point for team 1
 		game.addPoint(Game.TEAM_1);
@@ -86,25 +82,24 @@ public class TestGame {
 		 * scores from zero to three points are described as
 		 * "love", "fifteen", "thirty", and "forty"
 		 */
-		assertEquals(Game.SCORE_ZERO, game.getScore(Game.TEAM_1));
+		assertTrue("LOVE".equalsIgnoreCase(game.getScore(Game.TEAM_1)));
 		
 		// First point
 		game.addPoint(Game.TEAM_1);
-		assertEquals(Game.SCORE_FIFTEEN, game.getScore(Game.TEAM_1));
+		assertTrue("FIFTEEN".equalsIgnoreCase(game.getScore(Game.TEAM_1)));
 		
 		// Second one
 		game.addPoint(Game.TEAM_1);
-		assertEquals(Game.SCORE_THIRTY, game.getScore(Game.TEAM_1));
+		assertTrue("THIRTY".equalsIgnoreCase(game.getScore(Game.TEAM_1)));
 		
 		// And third point
 		game.addPoint(Game.TEAM_1);
-		assertEquals(Game.SCORE_FORTY, game.getScore(Game.TEAM_1));
+		assertTrue("FORTY".equalsIgnoreCase(game.getScore(Game.TEAM_1)));
 		
 		/* 
 		 * Next we'll test some numeric values up to, say, 120 (there 
 		 * are no limits set by the system)... 
-		 */
-		
+		 */		
 		game.addPoint(Game.TEAM_1);
 		assertEquals("50", game.getScore(Game.TEAM_1));
 		
