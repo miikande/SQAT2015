@@ -6,6 +6,9 @@ import java.util.List;
 
 /**
  * This class represents a single game of a tennis set/match.
+ * This is just an over-simplified example of tennis game
+ * and is utilized only for testing purposes, not for
+ * any real life use case.
  * 
  * @author Miikka Andersson
  *
@@ -35,13 +38,14 @@ public class Game {
 	public static final String SCORE_THIRTY		= "Thirty";
 	public static final String SCORE_FORTY 		= "Forty";
 	
-	// Game statuses
+	// Game statuses (keys)
 	public static final int GAME_STATUS_ONGOING 		 = 0;
 	public static final int GAME_STATUS_TEAM_1_WON 		 = 1;
 	public static final int GAME_STATUS_TEAM_2_WON 		 = 2;
 	public static final int GAME_STATUS_TEAM_1_ADVANTAGE = 3;
 	public static final int GAME_STATUS_TEAM_2_ADVANTAGE = 4;
-	
+	public static final int GAME_STATUS_DEUCE 			 = 5;
+		
 	// Keeping points for both teams (idx0=team1, idx1=team2)
 	private Integer[] points;
 	
@@ -192,10 +196,30 @@ public class Game {
 	 *   A game is won by the first player to have won at least four 
 	 *   points in total and at least two points more than the opponent.
 	 *   
+	 *   If at least three points have been scored by each player, and 
+	 *   the scores are equal, the score is "deuce".
+	 *   
+	 *   If at least three points have been scored by each side and a 
+	 *   player has one more point than his opponent, the score of the 
+	 *   game is "advantage" for the player in the lead.
+	 *   
 	 * @return status code as an integer
 	 */
 	public int getGameStatus() {
 		int status = GAME_STATUS_ONGOING;
+		
+		// Check for deuce & advantage
+		if (points[TEAM_1] >= 3 || points[TEAM_2] >= 3) {
+			if ((points[TEAM_1] - points[TEAM_2]) == 1) {
+				status = GAME_STATUS_TEAM_1_ADVANTAGE;
+			}
+			else if ((points[TEAM_2] - points[TEAM_1]) == 1) {
+				status = GAME_STATUS_TEAM_2_ADVANTAGE;
+			}
+			else if (points[TEAM_1] == points[TEAM_2]) {
+				status = GAME_STATUS_DEUCE;
+			}
+		}
 		
 		// Check if either team has won this game
 		if (points[TEAM_1] >= 4 || points[TEAM_2] >= 4) {

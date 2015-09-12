@@ -191,25 +191,62 @@ public class TestGame {
 	@Test
 	public void testGameStatusOngoing() {
 		initTwoPlayerGame();
+		
+		// Initial status should be "ongoing"
 		assertEquals(Game.GAME_STATUS_ONGOING, game.getGameStatus());
 		
 		// Let's add some points and check if the game is still ongoing (as it should)
 		game.addPoint(Game.TEAM_1);
 		game.addPoint(Game.TEAM_1);
 		game.addPoint(Game.TEAM_2);
-		game.addPoint(Game.TEAM_1);
-		game.addPoint(Game.TEAM_2);
 		game.addPoint(Game.TEAM_2);
 		assertEquals(Game.GAME_STATUS_ONGOING, game.getGameStatus());
 	}
 	
 	@Test
+	public void testGameStatusDouce() {
+		initTwoPlayerGame();
+		
+		// Generate a deuce state...
+		game.addPoint(Game.TEAM_1);
+		game.addPoint(Game.TEAM_1);
+		game.addPoint(Game.TEAM_2);
+		game.addPoint(Game.TEAM_2);
+		game.addPoint(Game.TEAM_1);
+		game.addPoint(Game.TEAM_2);
+		assertEquals(Game.GAME_STATUS_DEUCE, game.getGameStatus());
+	}
+	
+	@Test
 	public void testGameStatusTeam1Advantage() {
-		fail();
+		/*
+		 * From the spec:
+		 * 
+		 * If at least three points have been scored by each side and 
+		 * a player has one more point than his opponent, the score of 
+		 * the game is "advantage" for the player in the lead.
+		 */
+		initTwoPlayerGame();
+		game.addPoint(Game.TEAM_1);
+		game.addPoint(Game.TEAM_2);
+		game.addPoint(Game.TEAM_1);
+		game.addPoint(Game.TEAM_2);
+		game.addPoint(Game.TEAM_1);
+		game.addPoint(Game.TEAM_2);
+		game.addPoint(Game.TEAM_1);
+		assertEquals(Game.GAME_STATUS_TEAM_1_ADVANTAGE, game.getGameStatus());
 	}
 	
 	@Test
 	public void testGameStatusTeam2Advantage() {
-		fail();
+		initTwoPlayerGame();
+		game.addPoint(Game.TEAM_1);
+		game.addPoint(Game.TEAM_2);
+		game.addPoint(Game.TEAM_1);
+		game.addPoint(Game.TEAM_2);
+		game.addPoint(Game.TEAM_1);
+		game.addPoint(Game.TEAM_2);
+		game.addPoint(Game.TEAM_2);
+		assertEquals(Game.GAME_STATUS_TEAM_2_ADVANTAGE, game.getGameStatus());
 	}
 }
